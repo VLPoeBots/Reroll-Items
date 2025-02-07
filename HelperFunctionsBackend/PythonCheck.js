@@ -1,4 +1,4 @@
-import { exec, spawn } from "child_process";
+import { exec } from "child_process";
 import { WriteToFile } from "./LogFiles.js";
 export function CheckPyPackage(PackageName, LogFilePath) {
   exec(`pip show ${PackageName}`, (error, stdout, stderr) => {
@@ -9,24 +9,7 @@ export function CheckPyPackage(PackageName, LogFilePath) {
         stderr.includes("WARNING: Package(s) not found:")
       ) {
         WriteToFile(LogFilePath, `attempting to install ${PackageName}... `);
-        exec(
-          `pip install ${PackageName}`,
-          (installError, installStdout, installStderr) => {
-            if (installError || installStderr) {
-              WriteToFile(
-                logfile,
-                `Error installing ${PackageName}: ${
-                  installError || installStderr
-                }`
-              );
-            } else {
-              WriteToFile(
-                LogFilePath,
-                `${PackageName} has been installed successfully`
-              );
-            }
-          }
-        );
+        InstallPyPackage(PackageName, LogFilePath);
       }
       return;
     }
@@ -35,7 +18,21 @@ export function CheckPyPackage(PackageName, LogFilePath) {
     }
   });
 }
-
+function InstallPyPackage(PackageName, Logfile) {
+  exec(
+    `pip install ${PackageName}`,
+    (installError, installStdout, installStderr) => {
+      if (installError || installStderr) {
+        WriteToFile(
+          Logfile,
+          `Error installing ${PackageName}: ${installError || installStderr}`
+        );
+      } else {
+        WriteToFile(Logfile, `${PackageName} has been installed successfully`);
+      }
+    }
+  );
+}
 export function CheckPython(LogFilePath) {
   exec("python --version", (error, stdout, stderr) => {
     if (error) {

@@ -11,6 +11,14 @@ body {
   margin: 0;
   position: relative;
 }
+
+html {
+  position: absolute;
+  margin: 0;
+  overflow-y: auto;
+  height: 100%;
+  width: 100%;
+}
 #Main {
   position: relative;
   display: flex;
@@ -21,14 +29,6 @@ body {
   margin: 1rem;
   height: 100%;
   min-width: 100vw;
-}
-
-html {
-  position: absolute;
-  margin: 0;
-  overflow-y: auto;
-  height: 100%;
-  width: 100%;
 }
 .Blur {
   filter: blur(3px);
