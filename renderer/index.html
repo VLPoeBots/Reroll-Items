@@ -9,26 +9,9 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <dialog style="display: none" id="FileNameDialog">
-      <form method="dialog">
-        <label>Input name for the save file: </label>
-        <input class="Input" id="ExportFileInput" type="text" />
-        <button style="display: none" id="ExportFileOKButton">OK</button>
-      </form>
-    </dialog>
-
     <div id="Main">
       <div id="SavedCrafts" class="InitiallyHidden">Saved Crafts</div>
       <div id="Gallery" hidden></div>
-      <div id="Instructions" class="Instructions">
-        Select a currency item (Left Mouse click), then <br />
-        while the program is focused (Click on the program and do not click
-        anywhere else) <br />
-        move your mouse cursor over the center of the matching item in game
-        (without clicking), <br />
-        then press F1 to record its coordinates. <br />Remember that the program
-        window must be on focus for it to record the coords.
-      </div>
       <div class="InitiallyHidden" id="InputDiv">
         <input
           class="Input"
@@ -141,12 +124,6 @@
             </div>
           </div>
         </div>
-      </div>
-      <div id="Instructions2" class="Instructions Tutorial">
-        After you're done setting the basic currency coords, click on the
-        essence to open the essence tab and set the coords of at least one
-        essence and then press the "Store coordinates" button on the bottom of
-        the page.
       </div>
 
       <img
@@ -720,18 +697,12 @@
       </div>
       <button id="StoreCoordsButton" class="button">Store coordinates</button>
       <div id="Insertion"></div>
-      <label class="Instructions" hidden
-        >You can click on a mod to remove it from the list.</label
-      >
+
       <div id="Container" class="InitiallyHidden">Mods to look for:</div>
       <div id="ExclusionContainer" class="InitiallyHidden">
         Exclude mods that contain:
       </div>
       <div id="HideInstructions" class="InitiallyHidden">
-        <div class="HideInstructions">
-          <input type="checkbox" id="InstructionsCheckBox" class="CheckBox" />
-          <label>Hide Instructions</label>
-        </div>
         <div id="Fractures">
           <input type="checkbox" id="FractureCheckBox" class="CheckBox" />
           <label>Ignore fractures</label>

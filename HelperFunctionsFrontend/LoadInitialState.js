@@ -16,9 +16,6 @@ export function LoadInitialState() {
     CoordsLabel.style.opacity = 0.1;
     CoordsLabel.style.margin = "5px";
   }
-  //#region Mouse Position
-
-  //#endregion
 }
 export function ShowHiddenContent() {
   let HiddenElements = Array.from(

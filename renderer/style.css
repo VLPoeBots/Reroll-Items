@@ -111,45 +111,43 @@ html {
 }
 @keyframes snakeBorder {
   0% {
-    border-top: 5px solid black;
-    border-right: 5px solid transparent;
-    border-bottom: 5px solid transparent;
-    border-left: 5px solid transparent;
+    border-top-color: black;
+    border-right-color: black;
+    border-bottom-color: black;
+    border-left-color: black;
   }
   25% {
-    border-top: 5px solid black;
-    border-right: 5px solid black;
-    border-bottom: 5px solid transparent;
-    border-left: 5px solid transparent;
+    border-top-color: rgb(213, 9, 80);
+    border-right-color: black;
+    border-bottom-color: black;
+    border-left-color: black;
   }
   50% {
-    border-top: 5px solid black;
-    border-right: 5px solid black;
-    border-bottom: 5px solid black;
-    border-left: 5px solid transparent;
+    border-top-color: rgb(213, 9, 80);
+    border-right-color: rgb(213, 9, 80);
+    border-bottom-color: black;
+    border-left-color: black;
   }
   75% {
-    border-top: 5px solid black;
-    border-right: 5px solid black;
-    border-bottom: 5px solid black;
-    border-left: 5px solid black;
+    border-top-color: rgb(213, 9, 80);
+    border-right-color: rgb(213, 9, 80);
+    border-bottom-color: rgb(213, 9, 80);
+    border-left-color: black;
   }
   100% {
-    border-top: 5px solid transparent;
-    border-right: 5px solid black;
-    border-bottom: 5px solid black;
-    border-left: 5px solid black;
+    border-top-color: rgb(213, 9, 80);
+    border-right-color: rgb(213, 9, 80);
+    border-bottom-color: rgb(213, 9, 80);
+    border-left-color: rgb(213, 9, 80);
   }
 }
 
 .Hover {
   border: 3px double;
-  /* border-color: rgb(213, 9, 80); */
+  border-color: rgb(213, 9, 80);
   color: rgb(192, 23, 23);
-  width: 100px;
-  height: 100px;
 
-  animation: snakeBorder 2s infinite;
+  animation: snakeBorder 100ms;
 }
 .HoverTooltip {
   display: flex;
@@ -319,7 +317,7 @@ html {
   background-color: rgb(54, 54, 54);
 
   box-shadow: 0 0 0 999px #151515b0;
-  transition: box-shadow 3s ease-in-out;
+  transition: box-shadow 2s ease-in-out;
 
   /* backdrop-filter: blur(200px); */
   color: aliceblue;

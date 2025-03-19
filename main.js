@@ -17,25 +17,21 @@ import {
   DeleteFileContent,
   OpenFile,
   WriteToFile,
-  ExportItemToFile,
-  CheckFileExistence,
   LoadItem,
   ReadFolder,
-  CopyIcon,
 } from "./HelperFunctionsBackend/LogFiles.js";
 import {
   CheckPython,
   CheckPyPackage,
 } from "./HelperFunctionsBackend/PythonCheck.js";
 import "./HelperFunctionsBackend/Craft.js";
+import "./HelperFunctionsBackend/ExportFile.js";
 import "./HelperFunctionsBackend/UseCurrency.js";
-import { info } from "console";
-import Main from "electron/main";
 nativeTheme.themeSource = "dark";
 //
 //
 //
-let LocalDev = false;
+let LocalDev = true;
 //
 //
 //
@@ -142,22 +138,6 @@ app.whenReady().then(() => {
       win.webContents.send("SaveIconsData", [SaveIconsFolder, IconPics]);
     }
   });
-  ipcMain.on("ExportItem", (event, data) => {
-    //data[0] = Positive mods
-    //data[1] = Negative mods
-    //data[2] = File name
-    ItemExportPath = path.join(RerollFolder, `/${data[2]}.txt`);
-    let FileExists = CheckFileExistence(ItemExportPath);
-    console.log("File exists: ", FileExists);
-    if (!FileExists) {
-      ExportItemToFile(ItemExportPath, data[0], data[1]);
-      win.webContents.send("ExportItem", "Confirmation");
-      console.log("Confirmation sent!");
-    } else {
-      win.webContents.send("ExportItem", "NamingError");
-      console.log("Some error..");
-    }
-  });
   ipcMain.on("FocusFix", (e, d) => {
     win.blur();
     win.focus();
@@ -222,7 +202,18 @@ app.whenReady().then(() => {
           accelerator: "Ctrl+e",
 
           click() {
-            win.webContents.send("ExportItem", "InitialRequest");
+            dialog
+              .showSaveDialog(win, {
+                defaultPath: "ExportedItem",
+
+                filters: [{ name: "Text", extensions: ["txt"] }],
+              })
+              .then((result) => {
+                if (!result.canceled && result.filePath) {
+                  console.log(result.filePath);
+                  win.webContents.send("ExportItem", result.filePath);
+                }
+              });
           },
         },
         {
@@ -246,43 +237,13 @@ app.whenReady().then(() => {
           click: async () => {
             let MsgRes = await dialog.showMessageBox({
               message:
-                "Are you sure you want to delete ALL coords?\nThis will reset the proram completely",
+                "Are you sure you want to delete ALL coords?\nThis will reset AutoReroll completely",
               type: "question",
               buttons: ["OK", "Cancel"],
               title: "Reset all coords",
             });
             if (MsgRes.response === 0) {
               win.webContents.send("ClearLocalStorage", "awd");
-            }
-          },
-        },
-        {
-          label: "Import SaveIcon",
-          click: async () => {
-            let SaveIcon = await dialog.showOpenDialog({
-              properties: ["openFile", "multiSelections"],
-              filters: [{ name: "Text", extensions: ["png", "jpg", "jpeg"] }],
-            });
-            let IconsPath = [...SaveIcon.filePaths];
-            let IconPromises = [];
-            try {
-              for (let i = 0; i < IconsPath.length; i++) {
-                console.log("BaseName: ", path.basename(IconsPath[i]));
-                let IconImport = await CopyIcon(
-                  IconsPath[i],
-                  path.basename(IconsPath[i]),
-                  SaveIconsFolder,
-                  LogFilePath
-                );
-                IconPromises.push(IconImport);
-              }
-              await Promise.all(IconPromises);
-              win.webContents.send(
-                "ImportSaveIcons",
-                "Successfully loaded icons"
-              );
-            } catch (err) {
-              win.webContents.send("ImportSaveIcons", err);
             }
           },
         },

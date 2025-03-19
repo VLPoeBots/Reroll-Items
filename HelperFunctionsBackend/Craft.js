@@ -2,9 +2,8 @@ import { app, ipcMain } from "electron";
 import { win } from "../main.js";
 import { WriteToFile } from "./LogFiles.js";
 import { spawn } from "child_process";
-
 import path from "path";
-import { write } from "fs";
+
 const DocPath = app.getPath("documents");
 const RerollFolder = path.join(DocPath, "RerollLogs");
 let LogFilePath = path.join(RerollFolder, "/Logs.txt");

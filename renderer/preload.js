@@ -15,8 +15,7 @@ contextBridge.exposeInMainWorld("api", {
   MousePos: (callback) => ipcRenderer.on("MouseCoords", callback),
   Logfile: (callback) => ipcRenderer.on("Logfile", callback),
   ClearMods: (callback) => ipcRenderer.on("ClearMods", callback),
-  SaveIconsData: (callback) => ipcRenderer.on("SaveIconsData", callback),
-  ImportSaveIcons: (callback) => ipcRenderer.on("ImportSaveIcons", callback),
+  SaveIconsData: (callback) => ipcRenderer.on("SaveIconsData", callback), // Used to display SaveIcons on frontend
   ExportItemsListener: (callback) => ipcRenderer.on("ExportItem", callback),
 
   ImportItemsListener: (callback) => ipcRenderer.on("ImportItem", callback),
@@ -37,7 +36,7 @@ contextBridge.exposeInMainWorld("api", {
     ipcRenderer.send("FocusFix", callback);
   },
   ReturnExportData: (callback) => {
-    ipcRenderer.send("ExportItem", callback);
+    ipcRenderer.send("ReturnExportData", callback);
   },
   ResizeWindow: (callback) => {
     ipcRenderer.send("ResizeWindow", callback);

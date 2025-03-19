@@ -1,7 +1,5 @@
 import fs from "fs";
 import { exec } from "child_process";
-import Main from "electron/main";
-import { resolve } from "path";
 
 export function WriteToFile(FilePath, StringToWrite) {
   fs.appendFileSync(FilePath, StringToWrite + "\n");
@@ -19,21 +17,6 @@ export function OpenFile(FilePath) {
 
 export function DeleteFileContent(FilePath) {
   fs.writeFileSync(FilePath, "");
-}
-/**
- *
- * @param {string} FilePath
- * @param {Array<string>} Pmods
- * @param {Array<string>} Nmods
- */
-export function ExportItemToFile(FilePath, Pmods, Nmods) {
-  for (let i = 0; i < Pmods.length; i++) {
-    WriteToFile(FilePath, Pmods[i]);
-  }
-  WriteToFile(FilePath, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-  for (let i = 0; i < Nmods.length; i++) {
-    WriteToFile(FilePath, Nmods[i]);
-  }
 }
 
 export function CheckFileExistence(FilePath) {
@@ -65,9 +48,11 @@ export async function ReadFolder(LogfilePath, FolderPath) {
         WriteToFile(LogfilePath, `Error reading SaveIcons folder:  ${err}`);
         reject(err);
       } else {
-        let ImageExt = ["jpg", "png", "jpeg"];
+        let ImageExtentions = ["jpg", "png", "jpeg"];
         let ImageFiles = files.filter((file) => {
-          const ext = ImageExt.includes(file.split(".").pop()?.toLowerCase());
+          const ext = ImageExtentions.includes(
+            file.split(".").pop()?.toLowerCase()
+          );
           return ext;
         });
         WriteToFile(LogfilePath, `AllFiles: ${files}`);
@@ -75,25 +60,5 @@ export async function ReadFolder(LogfilePath, FolderPath) {
         resolve(ImageFiles);
       }
     });
-  });
-}
-
-export function CopyIcon(MainFilePath, IconName, IconFolderPath, LogfilePath) {
-  return new Promise((resolve, reject) => {
-    let NewLocation = IconFolderPath + "\\" + IconName;
-    console.log("MainFilePath: ", MainFilePath);
-    console.log("NewLocation: ", NewLocation);
-    WriteToFile(LogfilePath, `MainFilePath: ${MainFilePath}`);
-    WriteToFile(LogfilePath, `NewLocation: ${NewLocation}`);
-    try {
-      fs.copyFileSync(MainFilePath, NewLocation);
-      resolve("Sucessfully imported all icons");
-    } catch (err) {
-      if (err) {
-        let NewErr = new Error(`Failed to copy icons: ${err}`);
-        reject(NewErr);
-        WriteToFile(LogfilePath, `Error copying: ${err}`);
-      }
-    }
   });
 }

@@ -54,8 +54,12 @@ export function GetCurrentItem() {
   for (let i = 0; i < NegativeMods.length; i++) {
     NmodArray.push(NegativeMods[i].textContent.toLowerCase());
   }
-
-  return [PmodArray, NmodArray];
+  let TotalMods = NmodArray.length + PmodArray.length;
+  if (TotalMods > 0) {
+    return [PmodArray, NmodArray];
+  } else {
+    return null;
+  }
 }
 /**
  *
