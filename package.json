@@ -43,7 +43,6 @@
   ],
   "scripts": {
     "start": "set NODE_ENV=D&&electron .",
-    "build": "set NODE_ENV=production && electron-builder",
     "pack": "set NODE_ENV=production && electron-builder --dir",
     "dist": "set NODE_ENV=production && electron-builder"
   },
