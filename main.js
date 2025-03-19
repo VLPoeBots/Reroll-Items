@@ -31,7 +31,8 @@ nativeTheme.themeSource = "dark";
 //
 //
 //
-let LocalDev = false;
+let LocalDev = process.env.NODE_ENV;
+console.log("Enviroment: ", LocalDev);
 //
 //
 //
@@ -78,7 +79,7 @@ app.whenReady().then(() => {
   const RerollFolder = path.join(DocPath, "RerollLogs");
   LogFilePath = path.join(RerollFolder, "/Logs.txt");
   let SaveIconsFolder;
-  if (LocalDev) {
+  if (LocalDev === "Dev") {
     SaveIconsFolder =
       "C:\\Program Files\\reroll\\resources\\app.asar.unpacked\\renderer\\SaveIconPics";
     // win.webContents.send("GetIconPath", SaveIconsFolder);

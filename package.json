@@ -42,7 +42,7 @@
     "HelperFunctionsFrontend/*"
   ],
   "scripts": {
-    "start": "set NODE_ENV=D&&electron .",
+    "start": "set NODE_ENV=Dev&&electron .",
     "pack": "set NODE_ENV=production && electron-builder --dir",
     "dist": "set NODE_ENV=production && electron-builder"
   },
