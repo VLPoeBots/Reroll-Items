@@ -7,6 +7,7 @@ import {
   CenterItem,
   CloseSaveWindow,
   DeleteSavedItem,
+  RemoveElementByClass,
 } from "./HelperFn.js";
 import {
   ChangeLSSaves,
