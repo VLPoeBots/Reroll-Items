@@ -27,7 +27,6 @@ const ExclusionContainer = document.getElementById("ExclusionContainer");
 const CurrencyDiv = document.getElementById("CurrencyDiv");
 const StartButton = document.getElementById("StartButton");
 const SavedCrafts = document.getElementById("SavedCrafts");
-// let HoverTooltip = document.getElementsByClassName("HoverTooltip");
 // let DeleteSaveButton;
 let Counter;
 // const ExportFileOKButton = document.getElementById("ExportFileOKButton");

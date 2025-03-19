@@ -13,10 +13,12 @@ import {
   ChangeLSSaves,
   DeleteLSSaveItem,
   GetLSSaves,
+  GetSavedItem,
   CreateLocalStorageSave,
 } from "./LocalStorageFn.js";
-const SaveGallery = document.getElementById("Gallery");
-const GalleryImageArray = document.getElementsByClassName("GalleryImage");
+let SaveGallery = document.getElementById("Gallery");
+let GalleryImageArray = document.getElementsByClassName("GalleryImage");
+let HoverTooltip = document.getElementsByClassName("HoverTooltip");
 
 //#region Save item
 SaveCraftButton.addEventListener("click", function () {
