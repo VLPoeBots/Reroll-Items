@@ -6,6 +6,7 @@ import traceback
 import re 
 Rarity = None
 Check = None
+
 pyperclip.copy("")
 Orbs = {
     "OrbofAlteration": "magic",
@@ -26,6 +27,7 @@ try:
     ExclusionModArray = [item for item in ExclusionModArray if item]
     ExclusionModArray = [item for item in ExclusionModArray if item.strip()]
     SleepTimer = float(sys.argv[8])
+    InitialModNumber = int(sys.argv[9])
 
     if (sys.argv[2]==""):   
         MaxRolls = 9999
@@ -44,18 +46,18 @@ try:
     TabCoords = (int(TabCoords[0]),int(TabCoords[1]))
     if len(ModNums)>0:
         ModObject = dict(zip(ModName, ModNums))
-        print("ModObject: ", ModObject)
+        # print("ModObject: ", ModObject)
 
 
     Counter = 0
 
     def Reroll():
-        global Counter
-        global Check
-        global Check_lines
+        global Counter, Check, Check_lines, ModNumber
         stop = False
         while stop == False:
             time.sleep(SleepTimer)
+            ModNumber = InitialModNumber
+            # print("ModNumber: ", ModNumber)
             pyautogui.keyDown("shift")
 
             pyautogui.click()
@@ -70,7 +72,7 @@ try:
                 print("Item Not Found")
                 break
             Counter = Counter+1
-            print("MyCounter: ", Counter,flush= True)
+            # print("ModNumberIni: ", ModNumber)
             for line in Check_lines:
                 if Fracture:
                     if "fractured" in line:
@@ -78,8 +80,7 @@ try:
 
                 for name in ModName:
                     if name.strip().lower() in line:
-                        print("Found Line! " + line)
-        
+            
                         if len(ExclusionModArray)>0:
                             Exclusion = False
                             for ExclMod in ExclusionModArray:
@@ -87,6 +88,9 @@ try:
                                     print("Found exclusion mod: ", line, flush=True)
                                     Exclusion = True
                                     break
+                                else:
+                                    ModNumber -= 1
+                                    # print("Reducing Mod Number: ", ModNumber)
                             if Exclusion:
                                 print("Found mod, but exclusion triggered.")
                                 continue
@@ -96,17 +100,19 @@ try:
                             NumberInLine = re.findall(r'\d+', line)  #[1,70]
                             NumberInLine = int(NumberInLine[-1])  #70
                             if NumberInLine is not None:
-                                # print("ModObject: ", ModObject)
-                                if name in ModObject and NumberInLine >= ModObject[name]: 
-                                    print("Stopped because of this!",flush= True)
-
-                                    stop = True
-                                    break
-                                else: 
-                                    print("Number was an issue")
-                                    print(name in ModObject)
-                                    print("Number in line: ", NumberInLine)
-                                    continue
+                                # print("ModNumber: ", ModNumber, flush= True)
+                                if name in ModObject and NumberInLine >= ModObject[name]:
+                                    ModNumber -= 1
+                                    # print("Reducing ModNumber2: ", ModNumber, flush= True)
+                                    
+                                    if ModNumber < 1:
+                                         
+                                        # print("Stopped because of this!",flush= True)
+                                        stop = True
+                                        break
+                                    else: 
+                                        # print(name in ModObject)
+                                        continue
                         else: 
                             stop = True
                             break
@@ -128,7 +134,7 @@ try:
     pyautogui.press("c")
     pyautogui.keyUp("ctrl") 
     Check = pyperclip.paste().lower()
-    print("CurrentBase: "+Check)
+    # print("CurrentBase: "+Check)
     lines = Check.splitlines()
     for line in lines:
         if "rarity" in line:

@@ -4,12 +4,29 @@ import { WriteToFile } from "./LogFiles.js";
 import { spawn } from "child_process";
 import path from "path";
 
-const DocPath = app.getPath("documents");
-const RerollFolder = path.join(DocPath, "RerollLogs");
-let LogFilePath = path.join(RerollFolder, "/Logs.txt");
-let ExePath = app.getPath("exe");
-ExePath = ExePath.substring(0, ExePath.lastIndexOf("\\"));
-let LiftKeysPath = path.join(ExePath, "/python/LiftKeys.py");
+let DocPath;
+let ExePath;
+let LogFilePath;
+let LiftKeysPath;
+let RerollPath;
+let RerollFolder;
+let LocalDev = process.env.NODE_ENV;
+console.log("LocalDev: ", LocalDev);
+if (LocalDev === "Dev") {
+  DocPath = "C://Users//shacx";
+  RerollFolder = "C:/Users/shacx/Documents/RerollLogs";
+  LogFilePath = "C:/Users/shacx/Documents/RerollLogs/Logs.txt";
+  LiftKeysPath = "C:/Users/shacx/Documents/GitHub/Reroll/python/LiftKeys.py";
+  RerollPath = "C:/Users/shacx/Documents/GitHub/Reroll/python/Reroll.py";
+} else {
+  DocPath = app.getPath("documents");
+  ExePath = app.getPath("exe");
+  ExePath = ExePath.substring(0, ExePath.lastIndexOf("\\"));
+  RerollFolder = path.join(DocPath, "RerollLogs");
+  LogFilePath = path.join(RerollFolder, "/Logs.txt");
+  LiftKeysPath = path.join(ExePath, "/python/LiftKeys.py");
+  RerollPath = path.join(ExePath, "/python/Reroll.py");
+}
 
 ipcMain.on("StartCrafting", (event, args) => {
   win.webContents.send("Counter", "reset");
@@ -23,8 +40,7 @@ ipcMain.on("StartCrafting", (event, args) => {
   let Fracture = args[5];
   let ExclusionMods = args[6];
   let SleepTimer = args[7];
-  let RerollPath = path.join(ExePath, "/python/Reroll.py");
-  console.log(ModName);
+  let ModNumber = args[8];
   const StartCrafting = spawn("python", [
     RerollPath,
     ModName,
@@ -35,11 +51,12 @@ ipcMain.on("StartCrafting", (event, args) => {
     Fracture,
     ExclusionMods,
     SleepTimer,
+    ModNumber,
   ]);
 
   StartCrafting.stdout.on("data", (data) => {
     let PrintThis = String(data);
-    console.log("MyData:", PrintThis);
+    console.log(PrintThis);
     if (PrintThis.includes("MyCounter")) {
       win.webContents.send("Counter", "+");
     }

@@ -32,7 +32,6 @@ nativeTheme.themeSource = "dark";
 //
 //
 let LocalDev = process.env.NODE_ENV;
-console.log("Enviroment: ", LocalDev);
 //
 //
 //
@@ -40,7 +39,6 @@ console.log("Enviroment: ", LocalDev);
 //
 let win;
 let LogFilePath;
-let ItemExportPath;
 let ScreenRatio;
 let NewMenuTemplate;
 let CaptureMouseEvent = new EventEmitter();
@@ -73,11 +71,15 @@ const CreateWindow = () => {
 app.whenReady().then(() => {
   globalShortcut.unregisterAll();
   CreateWindow();
-  win.ELECTRON_ENABLE_SECURITY_WARNINGS = false;
-  const DocPath = app.getPath("documents");
-
-  const RerollFolder = path.join(DocPath, "RerollLogs");
+  let DocPath = app.getPath("documents");
+  let RerollFolder = path.join(DocPath, "RerollLogs");
   LogFilePath = path.join(RerollFolder, "/Logs.txt");
+  console.log("LogFilePath: ", LogFilePath);
+
+  CheckPython(LogFilePath);
+  CheckPyPackage("pyautogui", LogFilePath);
+  CheckPyPackage("pyperclip", LogFilePath);
+  win.ELECTRON_ENABLE_SECURITY_WARNINGS = false;
   let SaveIconsFolder;
   if (LocalDev === "Dev") {
     SaveIconsFolder =
@@ -101,12 +103,39 @@ app.whenReady().then(() => {
   });
 
   CreateLogFolder(RerollFolder, DocPath);
-  CheckPython(LogFilePath);
-  CheckPyPackage("pyautogui", LogFilePath);
-  CheckPyPackage("pyperclip", LogFilePath);
 
   app.on("window-all-closed", () => {
     if (process.platform !== "darwin") app.quit();
+  });
+  let OpenLogs = globalShortcut.register("F2", () => {
+    try {
+      OpenFile(LogFilePath);
+    } catch (err) {
+      WriteToFile(LogFilePath, "Error opening the logfile: " + err);
+      win.webContents.send("error", "Error opening the logfile: " + err);
+    }
+  });
+  let MouseCapture = globalShortcut.register("F1", () => {
+    // win.focus();
+    MousePosition = screen.getCursorScreenPoint();
+    MousePosition = JSON.stringify(MousePosition);
+    MousePosition = MousePosition.replace(/[^\d,]/g, "");
+    CaptureMouseEvent.emit("Coords", MousePosition);
+  });
+  let DeleteLogs = globalShortcut.register("F4", () => {
+    try {
+      DeleteFileContent(LogFilePath);
+      win.webContents.send("Logfile", "Deleted the log files!");
+    } catch (err) {
+      WriteToFile(
+        LogFilePath,
+        `Error deleting the ${LogFilePath} file: " + err`
+      );
+      win.webContents.send(
+        "Logfile",
+        `Error deleting the file ${LogFilePath} :  + ${err}`
+      );
+    }
   });
   const StartCraft = globalShortcut.register("Control+Enter", () => {
     console.log("Crafting hotkey working!");

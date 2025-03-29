@@ -358,3 +358,9 @@ html {
 .scrollable-container {
   scroll-margin-left: 4px; /* Adds space on the right side when scrolling */
 }
+#LagInput {
+  width: 2.3rem;
+}
+#ModNumber {
+  width: 2rem;
+}

@@ -58,6 +58,7 @@ const EssenceNameArray = [];
 const Insertion = document.getElementById("Insertion"); // Used for saving crafts
 const MaxRerolls = document.getElementById("MaxRerolls");
 const LagInput = document.getElementById("LagInput");
+let ModNumber = document.getElementById("ModNumber");
 // const MinRoll = document.getElementById("MinRoll");
 // const InputDiv = document.getElementById("InputDiv");
 // const Instructions = document.getElementsByClassName("Instructions");
@@ -309,7 +310,7 @@ window.api.GlobalKey((event, data) => {
 MaxRerolls.addEventListener("wheel", function (e) {});
 
 LagInput.addEventListener("wheel", function (e) {});
-
+ModNumber.addEventListener("wheel", function (e) {});
 //#endregion
 
 //#region CheckBox Eventlistener

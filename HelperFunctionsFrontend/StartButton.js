@@ -7,6 +7,7 @@ export function StartCrafting(CraftMaterial) {
 
   const ExclusionModClass = document.getElementsByClassName("ExclusionMod");
   const ModClass = document.getElementsByClassName("ModName");
+  let ModNumber = document.getElementById("ModNumber");
 
   let Hover = document.getElementsByClassName("Hover");
   if (localStorage.length < 1) {
@@ -67,6 +68,8 @@ export function StartCrafting(CraftMaterial) {
         LagInputNumber = 0;
       }
       InfoArray.push(Number(LagInputNumber)); //7
+      InfoArray.push(Number(ModNumber.value)); //8
+      console.log("InfoArray: ", InfoArray);
       window.api.StartCrafting(InfoArray);
     } else {
       RemoveElementByClass("HoverTooltip");

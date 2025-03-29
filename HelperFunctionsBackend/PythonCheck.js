@@ -11,7 +11,6 @@ export function CheckPyPackage(PackageName, LogFilePath) {
         WriteToFile(LogFilePath, `attempting to install ${PackageName}... `);
         InstallPyPackage(PackageName, LogFilePath);
       }
-      return;
     }
     if (stdout.includes("Version")) {
       WriteToFile(LogFilePath, `${PackageName} is already installed`);
