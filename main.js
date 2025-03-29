@@ -9,8 +9,10 @@ import {
   Menu,
   nativeTheme,
   dialog,
-  autoUpdater,
 } from "electron";
+import pkg from "electron-updater";
+const { autoUpdater } = pkg;
+
 import { EventEmitter } from "events";
 import "./HelperFunctionsBackend/LogFiles.js";
 import {
@@ -39,34 +41,7 @@ let LocalDev = process.env.NODE_ENV;
 //
 //
 //#region AutoUpdater
-if (LocalDev === "Dev") {
-} else {
-  let FeedUrl = `https://https://github.com/VLPoeBots/Reroll-Items/releases/download/v${app.getVersion()}/`;
-  autoUpdater.setFeedURL(FeedUrl);
-  autoUpdater.checkForUpdates();
-  autoUpdater.on("update-available", () => {
-    // Show update notification
-  });
-  autoUpdater.on("update-downloaded", () => {
-    const options = {
-      type: "UpdateInfo",
-      buttons: ["Restart", "Later"],
-      title: "Update Available",
-      message:
-        "A new version has been downloaded. Restart the application to apply the update.",
-    };
-    dialog.showMessageBox(options).then((result) => {
-      if (result.response === 0) {
-        autoUpdater.quitAndInstall();
-      }
-    });
-  });
-
-  autoUpdater.on("error", (message) => {
-    log.error("Update error:", message);
-  });
-}
-
+autoUpdater.checkForUpdatesAndNotify();
 //#endregion
 let win;
 let LogFilePath;
@@ -107,6 +82,7 @@ app.whenReady().then(() => {
   let RerollFolder = path.join(DocPath, "RerollLogs");
   LogFilePath = path.join(RerollFolder, "/Logs.txt");
   console.log("LogFilePath: ", LogFilePath);
+  WriteToFile(LogFilePath, `AutoReroll version: ${app.getVersion()}`);
 
   CheckPython(LogFilePath);
   CheckPyPackage("pyautogui", LogFilePath);
