@@ -1,5 +1,7 @@
 import path from "path";
 import fs from "fs";
+import pkg from "electron-updater";
+const { autoUpdater } = pkg;
 import {
   app,
   BrowserWindow,
@@ -10,8 +12,6 @@ import {
   nativeTheme,
   dialog,
 } from "electron";
-import pkg from "electron-updater";
-const { autoUpdater } = pkg;
 
 import { EventEmitter } from "events";
 import "./HelperFunctionsBackend/LogFiles.js";
