@@ -39,30 +39,33 @@ let LocalDev = process.env.NODE_ENV;
 //
 //
 //#region AutoUpdater
-let FeedUrl = `https://https://github.com/VLPoeBots/Reroll-Items/releases/download/v${app.getVersion()}/`;
-autoUpdater.setFeedURL(FeedUrl);
-autoUpdater.checkForUpdates();
-autoUpdater.on("update-available", () => {
-  // Show update notification
-});
-autoUpdater.on("update-downloaded", () => {
-  const options = {
-    type: "UpdateInfo",
-    buttons: ["Restart", "Later"],
-    title: "Update Available",
-    message:
-      "A new version has been downloaded. Restart the application to apply the update.",
-  };
-  dialog.showMessageBox(options).then((result) => {
-    if (result.response === 0) {
-      autoUpdater.quitAndInstall();
-    }
+if (LocalDev === "Dev") {
+} else {
+  let FeedUrl = `https://https://github.com/VLPoeBots/Reroll-Items/releases/download/v${app.getVersion()}/`;
+  autoUpdater.setFeedURL(FeedUrl);
+  autoUpdater.checkForUpdates();
+  autoUpdater.on("update-available", () => {
+    // Show update notification
   });
-});
+  autoUpdater.on("update-downloaded", () => {
+    const options = {
+      type: "UpdateInfo",
+      buttons: ["Restart", "Later"],
+      title: "Update Available",
+      message:
+        "A new version has been downloaded. Restart the application to apply the update.",
+    };
+    dialog.showMessageBox(options).then((result) => {
+      if (result.response === 0) {
+        autoUpdater.quitAndInstall();
+      }
+    });
+  });
 
-autoUpdater.on("error", (message) => {
-  log.error("Update error:", message);
-});
+  autoUpdater.on("error", (message) => {
+    log.error("Update error:", message);
+  });
+}
 
 //#endregion
 let win;
