@@ -1,13 +1,18 @@
 {
   "name": "reroll",
-  "version": "2.0.0",
-  "description": "Automatically rerolls an item",
+  "version": "2.1.0",
+  "description": "Automatically rerolls items",
   "main": "main.js",
   "type": "module",
   "build": {
     "asar": true,
+    "publish": {
+      "provider": "github",
+      "owner": "VLPoeBots",
+      "repo": "Reroll-Items"
+    },
     "asarUnpack": "renderer/SaveIconPics",
-    "appId": "PoeAutoReroll",
+    "appId": "AutoReroll",
     "extraFiles": [
       {
         "from": "python/Reroll.py",
@@ -29,7 +34,8 @@
     },
     "nsis": {
       "oneClick": true,
-      "uninstallDisplayName": "RemovePoeAutoReroll",
+      "uninstallPrevious": true,
+      "uninstallDisplayName": "Uninstall AutoReroll",
       "installerIcon": "frosttide23.ico",
       "allowElevation": true,
       "perMachine": true
@@ -44,12 +50,16 @@
   "scripts": {
     "start": "set NODE_ENV=Dev&&electron .",
     "pack": "set NODE_ENV=production && electron-builder --dir",
-    "dist": "set NODE_ENV=production && electron-builder"
+    "dist": "set NODE_ENV=production && electron-builder",
+    "postinstall": "electron-builder install-app-deps"
   },
   "author": "Frosttide",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^32.1.2",
-    "electron-builder": "^25.0.5"
+    "electron": "latest",
+    "electron-builder": "^26.0.12"
+  },
+  "dependencies": {
+    "electron-updater": "^6.6.2"
   }
 }

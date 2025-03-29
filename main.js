@@ -9,6 +9,7 @@ import {
   Menu,
   nativeTheme,
   dialog,
+  autoUpdater,
 } from "electron";
 import { EventEmitter } from "events";
 import "./HelperFunctionsBackend/LogFiles.js";
@@ -37,6 +38,30 @@ let LocalDev = process.env.NODE_ENV;
 //
 //
 //
+//#region AutoUpdater
+let FeedUrl = `https://https://github.com/VLPoeBots/Reroll-Items/releases/download/v${app.getVersion()}/`;
+autoUpdater.setFeedURL(FeedUrl);
+autoUpdater.checkForUpdatesAndNotify();
+autoUpdater.on("update-downloaded", () => {
+  const options = {
+    type: "UpdateInfo",
+    buttons: ["Restart", "Later"],
+    title: "Update Available",
+    message:
+      "A new version has been downloaded. Restart the application to apply the update.",
+  };
+  dialog.showMessageBox(options).then((result) => {
+    if (result.response === 0) {
+      autoUpdater.quitAndInstall();
+    }
+  });
+});
+
+autoUpdater.on("error", (message) => {
+  log.error("Update error:", message);
+});
+
+//#endregion
 let win;
 let LogFilePath;
 let ScreenRatio;
