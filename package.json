@@ -1,5 +1,5 @@
 {
-  "name": "reroll",
+  "name": "AutoReroll",
   "version": "2.1.0",
   "description": "Automatically rerolls items",
   "main": "main.js",
