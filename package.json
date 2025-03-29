@@ -1,6 +1,6 @@
 {
   "name": "AutoReroll",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Automatically rerolls items",
   "main": "main.js",
   "type": "module",
