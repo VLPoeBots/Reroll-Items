@@ -34,7 +34,6 @@
     },
     "nsis": {
       "oneClick": true,
-      "uninstallPrevious": true,
       "uninstallDisplayName": "Uninstall AutoReroll",
       "installerIcon": "frosttide23.ico",
       "allowElevation": true,

@@ -41,7 +41,10 @@ let LocalDev = process.env.NODE_ENV;
 //#region AutoUpdater
 let FeedUrl = `https://https://github.com/VLPoeBots/Reroll-Items/releases/download/v${app.getVersion()}/`;
 autoUpdater.setFeedURL(FeedUrl);
-autoUpdater.checkForUpdatesAndNotify();
+autoUpdater.checkForUpdates();
+autoUpdater.on("update-available", () => {
+  // Show update notification
+});
 autoUpdater.on("update-downloaded", () => {
   const options = {
     type: "UpdateInfo",
@@ -75,10 +78,10 @@ let PreloadPath = path.join(app.getAppPath(), "/renderer/preload.js");
 const CreateWindow = () => {
   win = new BrowserWindow({
     width: 800,
-    height: 550,
+    height: 600,
     x: 490,
     y: 0,
-    title: "Reroll",
+    title: "AutoReroll",
 
     webPreferences: {
       nodeIntegration: false,
