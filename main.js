@@ -102,6 +102,7 @@ const CreateWindow = () => {
 app.whenReady().then(() => {
   globalShortcut.unregisterAll();
   CreateWindow();
+
   let DocPath = app.getPath("documents");
   let RerollFolder = path.join(DocPath, "RerollLogs");
   LogFilePath = path.join(RerollFolder, "/Logs.txt");
