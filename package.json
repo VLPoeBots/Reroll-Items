@@ -1,6 +1,6 @@
 {
   "name": "AutoReroll",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Automatically rerolls items",
   "main": "main.js",
   "type": "module",
@@ -50,13 +50,13 @@
     "start": "set NODE_ENV=Dev&&electron .",
     "pack": "set NODE_ENV=production && electron-builder --dir",
     "dist": "set NODE_ENV=production && electron-builder",
-    "publish": "electron-builder --win -p always"
+    "publish": "set GH_TOKEN= electron-builder --win -p always"
   },
   "author": "Frosttide",
   "license": "ISC",
   "devDependencies": {
     "electron": "latest",
-    "electron-builder": "^26.0.12"
+    "electron-builder": "latest"
   },
   "dependencies": {
     "electron-updater": "^6.6.2"
