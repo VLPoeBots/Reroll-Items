@@ -52,10 +52,7 @@ jspm_packages/
 
 dist
 build
-#pics
-renderer/EssencePics/
-renderer/CurrencyPics/
-renderer/SaveIconPics/
+
 
 
 

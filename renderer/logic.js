@@ -381,7 +381,7 @@ EssenceImage.addEventListener("click", function (e) {
     CurrencyDiv.style.display = "none";
     EssenceContainer.style.display = "flex";
     ImageContainer.style.flexDirection = "column";
-    EssenceImage.src = "EssencePics/Arrow.png";
+    EssenceImage.src = "../Pictures/CurrencyPics/Arrow.png";
   } else {
     for (const Item of EssenceClassList) {
       Item.style.opacity = 0.3;

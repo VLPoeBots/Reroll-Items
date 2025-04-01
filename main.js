@@ -59,7 +59,7 @@ const CreateWindow = () => {
     height: 600,
     x: 490,
     y: 0,
-    title: "AutoReroll",
+    title: `AutoRerollv${app.getVersion()}`,
 
     webPreferences: {
       nodeIntegration: false,
@@ -79,9 +79,12 @@ app.whenReady().then(() => {
   CreateWindow();
 
   let DocPath = app.getPath("documents");
+  console.log("DocPath: ", DocPath);
   let RerollFolder = path.join(DocPath, "RerollLogs");
+  console.log("RerollFolder: ", RerollFolder);
   LogFilePath = path.join(RerollFolder, "/Logs.txt");
   console.log("LogFilePath: ", LogFilePath);
+  CreateLogFolder(RerollFolder, DocPath);
   WriteToFile(LogFilePath, `AutoReroll version: ${app.getVersion()}`);
 
   CheckPython(LogFilePath);
@@ -109,8 +112,6 @@ app.whenReady().then(() => {
     console.log("Window loaded. Sending GetIconPath...", SaveIconsFolder);
     win.webContents.send("GetIconPath", SaveIconsFolder);
   });
-
-  CreateLogFolder(RerollFolder, DocPath);
 
   app.on("window-all-closed", () => {
     if (process.platform !== "darwin") app.quit();
