@@ -59,7 +59,7 @@ const CreateWindow = () => {
     height: 600,
     x: 490,
     y: 0,
-    title: `AutoRerollv${app.getVersion()}`,
+    title: `AutoReroll v${app.getVersion()}`,
 
     webPreferences: {
       nodeIntegration: false,
@@ -79,11 +79,8 @@ app.whenReady().then(() => {
   CreateWindow();
 
   let DocPath = app.getPath("documents");
-  console.log("DocPath: ", DocPath);
   let RerollFolder = path.join(DocPath, "RerollLogs");
-  console.log("RerollFolder: ", RerollFolder);
   LogFilePath = path.join(RerollFolder, "/Logs.txt");
-  console.log("LogFilePath: ", LogFilePath);
   CreateLogFolder(RerollFolder, DocPath);
   WriteToFile(LogFilePath, `AutoReroll version: ${app.getVersion()}`);
 
@@ -96,8 +93,6 @@ app.whenReady().then(() => {
     SaveIconsFolder =
       "C:\\Program Files\\reroll\\resources\\app.asar.unpacked\\renderer\\SaveIconPics";
     // win.webContents.send("GetIconPath", SaveIconsFolder);
-
-    console.log(SaveIconsFolder);
   } else {
     SaveIconsFolder = path.join(
       app.getPath("exe").replace("reroll.exe", ""),
@@ -109,7 +104,6 @@ app.whenReady().then(() => {
     // win.webContents.send("GetIconPath", SaveIconsFolder);
   }
   win.webContents.on("did-finish-load", () => {
-    console.log("Window loaded. Sending GetIconPath...", SaveIconsFolder);
     win.webContents.send("GetIconPath", SaveIconsFolder);
   });
 
@@ -147,28 +141,22 @@ app.whenReady().then(() => {
     }
   });
   const StartCraft = globalShortcut.register("Control+Enter", () => {
-    console.log("Crafting hotkey working!");
     win.webContents.send("StartCraft", "Crafting Started");
   });
 
   const Scour = globalShortcut.register("Control+Backspace", () => {
-    console.log("Scour function triggered");
     win.webContents.send("GlobalKey", "ScourOrb");
   });
   const Augment = globalShortcut.register("Shift+Enter", () => {
-    console.log("Augment function triggered");
     win.webContents.send("GlobalKey", "AugOrb");
   });
   const Annul = globalShortcut.register("Shift+Backspace", () => {
-    console.log("Annul function triggered");
     win.webContents.send("GlobalKey", "AnnulOrb");
   });
   const Regal = globalShortcut.register("Control+Shift+Enter", () => {
-    console.log("Regal function triggered");
     win.webContents.send("GlobalKey", "RegalOrb");
   });
   const Transmute = globalShortcut.register("Control+Alt+Enter", () => {
-    console.log("Transmute function triggered");
     win.webContents.send("GlobalKey", "TransmuteOrb");
   });
   ipcMain.on("LoadSaveIconPics", async (event, data) => {
@@ -249,7 +237,6 @@ app.whenReady().then(() => {
               })
               .then((result) => {
                 if (!result.canceled && result.filePath) {
-                  console.log(result.filePath);
                   win.webContents.send("ExportItem", result.filePath);
                 }
               });
@@ -317,7 +304,6 @@ app.whenReady().then(() => {
           accelerator: "F4",
           click() {
             try {
-              console.log("LogfilePath: ", LogFilePath);
               DeleteFileContent(LogFilePath);
               win.webContents.send("Logfile", "Deleted the log files!");
             } catch (err) {
