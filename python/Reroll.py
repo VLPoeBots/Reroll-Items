@@ -9,9 +9,9 @@ Check = None
 
 pyperclip.copy("")
 Orbs = {
-    "OrbofAlteration": "magic",
-    "ChaosOrb": "rare",
-    "essence" : "rare"
+    "OrbofAlteration": "마법",
+    "ChaosOrb": "희귀",
+    "essence" : "희귀"
 }
 def CheckRarity(Mats, Rarity):
 
@@ -75,7 +75,7 @@ try:
             # print("ModNumberIni: ", ModNumber)
             for line in Check_lines:
                 if Fracture:
-                    if "fractured" in line:
+                    if "분열" in line:
                         continue
 
                 for name in ModName:
@@ -137,8 +137,8 @@ try:
     # print("CurrentBase: "+Check)
     lines = Check.splitlines()
     for line in lines:
-        if "rarity" in line:
-            Rarity = line.replace("rarity:", "").strip().lower()
+        if "희귀도" in line:
+            Rarity = line.replace("희귀도:", "").strip().lower()
             break
 
     

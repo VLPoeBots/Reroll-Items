@@ -9,6 +9,7 @@ print(CurrencyCoords, flush=True)
 print(ItemCoords, flush=True)
 
 def UseCurrency():
+    
     pyautogui.moveTo(CurrencyCoords)
     pyautogui.rightClick()
     pyautogui.moveTo(ItemCoords)

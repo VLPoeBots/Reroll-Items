@@ -1,6 +1,6 @@
 {
-  "name": "AutoReroll",
-  "version": "3.1.2",
+  "name": "KoreanAutoReroll",
+  "version": "3.0.1",
   "description": "Automatically rerolls items",
   "main": "main.js",
   "type": "module",
