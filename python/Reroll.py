@@ -137,8 +137,8 @@ try:
     # print("CurrentBase: "+Check)
     lines = Check.splitlines()
     for line in lines:
-        if "희귀도" in line:
-            Rarity = line.replace("희귀도:", "").strip().lower()
+        if "아이템 희귀도" in line:
+            Rarity = line.replace("아이템 희귀도:", "").strip().lower()
             break
 
     
