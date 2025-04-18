@@ -91,16 +91,17 @@ app.whenReady().then(() => {
   let SaveIconsFolder;
   if (LocalDev === "Dev") {
     SaveIconsFolder =
-      "C:\\Program Files\\reroll\\resources\\app.asar.unpacked\\renderer\\SaveIconPics";
+      "C:\\Program Files\\AutoReroll\\resources\\app.asar.unpacked\\renderer\\SaveIconPics";
     // win.webContents.send("GetIconPath", SaveIconsFolder);
   } else {
     SaveIconsFolder = path.join(
-      app.getPath("exe").replace("reroll.exe", ""),
+      app.getPath("exe").replace("AutoReroll.exe", ""),
       "resources",
       "app.asar.unpacked",
       "renderer",
       "SaveIconPics"
     );
+
     // win.webContents.send("GetIconPath", SaveIconsFolder);
   }
   win.webContents.on("did-finish-load", () => {

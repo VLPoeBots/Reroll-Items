@@ -128,13 +128,6 @@ if (localStorage.length < 2) {
   LoadInitialState();
 } else {
   (async function () {
-    let IconFolderPath = new Promise((resolve) => {
-      window.api.GetIconPath((event, data) => {
-        resolve(data);
-      });
-    });
-    let IconPath = await IconFolderPath;
-
     let SavedItems = GetLSSaves("Save");
     if (Object.keys(SavedItems).length > 0) {
       for (const key of Object.keys(SavedItems)) {
