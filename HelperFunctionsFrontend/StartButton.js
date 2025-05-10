@@ -4,11 +4,16 @@ export function StartCrafting(CraftMaterial) {
   let Coords;
   let InfoArray = []; //Array to send data to backend
   let TabCoords;
+  let LagInputNumber;
+  if (LagCheckBox.checked) {
+    LagInputNumber = Number(LagInput.value);
+  } else {
+    LagInputNumber = 0;
+  }
 
   const ExclusionModClass = document.getElementsByClassName("ExclusionMod");
   const ModClass = document.getElementsByClassName("ModName");
-  let ModNumber = document.getElementById("ModNumber");
-
+  let ModNumber = document.getElementById("ModNumber"); // Minimum number of mods to look for
   let Hover = document.getElementsByClassName("Hover");
   if (localStorage.length < 1) {
     RemoveElementByClass("HoverTooltip");
@@ -34,41 +39,27 @@ export function StartCrafting(CraftMaterial) {
         }
         ModArray.push(MyMod);
       }
-      InfoArray.push(ModArray); //0
 
-      InfoArray.push(MaxRerolls.value); //1
-
+      Coords = localStorage.getItem(`${CraftMaterial}Coords`);
+      Coords = Coords.replace("[", "").replace("]", "");
       if (CraftMaterial.includes("Essence")) {
         TabCoords = localStorage.getItem("EssenceTabCoords");
-        Coords = JSON.parse(localStorage.getItem("EssenceCoords"));
-        for (const Item of Object.keys(Coords)) {
-          if (Coords[Item].Name.includes(CraftMaterial)) {
-            Coords = Coords[Item].Coords;
-            Coords = JSON.stringify(Coords);
-            Coords = Coords.replace("[", "").replace("]", "");
-            break;
-          }
-        }
+      } else if (CraftMaterial === "Harvest") {
+        TabCoords = localStorage.getItem("HarvestTabCoords");
       } else {
         TabCoords = localStorage.getItem("CurrencyTabCoords");
-        TabCoords = TabCoords.replace("[", "").replace("]", "");
-        Coords = localStorage.getItem(`${CraftMaterial}Coords`);
-        Coords = Coords.replace("[", "").replace("]", "");
       }
+      TabCoords = TabCoords.replace("[", "").replace("]", "");
 
+      InfoArray.push(ModArray); //0
+      InfoArray.push(MaxRerolls.value); //1
       InfoArray.push(Coords); //2
       InfoArray.push(TabCoords); //3
       InfoArray.push(CraftMaterial); //4
       InfoArray.push(Fracture); //5
       InfoArray.push(ExclusionModArray); //6
-      let LagInputNumber;
-      if (LagCheckBox.checked) {
-        LagInputNumber = Number(LagInput.value);
-      } else {
-        LagInputNumber = 0;
-      }
       InfoArray.push(Number(LagInputNumber)); //7
-      InfoArray.push(Number(ModNumber.value)); //8
+      InfoArray.push(Number(ModNumber.value)); //8 - Minimum number of mods to look for
       console.log("InfoArray: ", InfoArray);
       window.api.StartCrafting(InfoArray);
     } else {

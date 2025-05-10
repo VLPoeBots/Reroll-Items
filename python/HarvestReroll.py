@@ -4,22 +4,11 @@ import pyperclip
 import sys
 import traceback
 import re 
+
 Rarity = None
 Check = None
 
 pyperclip.copy("")
-Orbs = {
-    "OrbOfAlteration": "magic",
-    "ChaosOrb": "rare",
-    "essence" : "rare"
-}
-def CheckRarity(Mats, Rarity):
-
-    if Rarity == Orbs[Mats]:
-        return True
-    else:
-        return False
-
 
 try:
     ModArray = sys.argv[1].split(",")
@@ -38,7 +27,6 @@ try:
     ModNums = [int(num) for s in ModArray for num in re.findall(r'\d+', s)]
     ModName = [re.sub(r'\d+', '', s) for s in ModArray]
     TabCoords = sys.argv[4].split(",")
-    CraftMaterial = sys.argv[5]
     Fracture = sys.argv[6]
     if Fracture == "false":
         Fracture = False
@@ -46,7 +34,6 @@ try:
     TabCoords = (int(TabCoords[0]),int(TabCoords[1]))
     if len(ModNums)>0:
         ModObject = dict(zip(ModName, ModNums))
-        # print("ModObject: ", ModObject)
 
 
     Counter = 0
@@ -57,10 +44,9 @@ try:
         while stop == False:
             time.sleep(SleepTimer)
             ModNumber = InitialModNumber
-            # print("ModNumber: ", ModNumber)
-            pyautogui.keyDown("shift")
-
+            pyautogui.moveTo(CurrencyCoords)
             pyautogui.click()
+            pyautogui.moveTo(TabCoords)
             pyperclip.copy("")
             pyautogui.keyDown("ctrl")
             pyautogui.press("c")
@@ -72,7 +58,6 @@ try:
                 print("Item Not Found")
                 break
             Counter = Counter+1
-            print("MyCounter",flush=True)
             for line in Check_lines:
                 if Fracture:
                     if "fractured" in line:
@@ -90,7 +75,6 @@ try:
                                     break
                                 else:
                                     ModNumber -= 1
-                                    # print("Reducing Mod Number: ", ModNumber)
                             if Exclusion:
                                 print("Found mod, but exclusion triggered.")
                                 continue
@@ -100,18 +84,14 @@ try:
                             NumberInLine = re.findall(r'\d+', line)  #[1,70]
                             NumberInLine = int(NumberInLine[-1])  #70
                             if NumberInLine is not None:
-                                # print("ModNumber: ", ModNumber, flush= True)
                                 if name in ModObject and NumberInLine >= ModObject[name]:
                                     ModNumber -= 1
-                                    # print("Reducing ModNumber2: ", ModNumber, flush= True)
                                     
                                     if ModNumber < 1:
                                          
-                                        # print("Stopped because of this!",flush= True)
                                         stop = True
                                         break
                                     else: 
-                                        # print(name in ModObject)
                                         continue
                         else: 
                             stop = True
@@ -126,32 +106,28 @@ try:
                 break
 
 
-    pyautogui.moveTo(CurrencyCoords)
-    pyautogui.rightClick(CurrencyCoords)
     pyautogui.moveTo(TabCoords)
+
     
     pyautogui.keyDown("ctrl")
     pyautogui.press("c")
     pyautogui.keyUp("ctrl") 
-    print("InitialBase", pyperclip.paste(), flush=True)
-
+    print("InitialBase", pyperclip.paste(),flush=True)
     Check = pyperclip.paste().lower()
-    # print("CurrentBase: "+Check)
+    
     lines = Check.splitlines()
     for line in lines:
         if "rarity" in line:
             Rarity = line.replace("rarity:", "").strip().lower()
+            print("Rarity: ", Rarity)
             break
 
     
-    pyperclip.copy("")
-    if "essence" in CraftMaterial.lower():
-        CraftMaterial = "essence"
-    if CheckRarity(CraftMaterial,Rarity):
+    pyperclip.copy("") 
+    if Rarity == "rare":
         Reroll()
     else: 
         print("RarityError")
-    pyautogui.keyUp("shift")
 
 
 

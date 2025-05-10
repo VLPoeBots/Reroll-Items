@@ -37,7 +37,7 @@
       <div id="CurrencyDiv">
         <div id="ImageContainer">
           <div id="ManualContainer">
-            <div class="CurrencyGroup">
+            <div id="RegalOrbGroup" class="CurrencyGroup">
               <img
                 id="RegalOrb"
                 class="Image Currency Manual"
@@ -46,7 +46,7 @@
               />
               <label id="RegalOrbLabel" class="XYLabel AddBorder">X:, Y:</label>
             </div>
-            <div class="CurrencyGroup">
+            <div id="AnnulOrbGroup" class="CurrencyGroup">
               <img
                 id="AnnulOrb"
                 class="Image Currency Manual"
@@ -55,7 +55,7 @@
               />
               <label id="AnnulOrbLabel" class="XYLabel AddBorder">X:, Y:</label>
             </div>
-            <div class="CurrencyGroup">
+            <div id="ScourOrbGroup" class="CurrencyGroup">
               <img
                 id="ScourOrb"
                 class="Image Currency Manual"
@@ -64,7 +64,7 @@
               />
               <label id="ScourOrbLabel" class="XYLabel AddBorder">X:, Y:</label>
             </div>
-            <div class="CurrencyGroup">
+            <div id="TransmuteOrbGroup" class="CurrencyGroup">
               <img
                 id="TransmuteOrb"
                 class="Image Currency Manual"
@@ -75,7 +75,7 @@
                 >X:, Y:</label
               >
             </div>
-            <div class="CurrencyGroup">
+            <div id="AugOrbGroup" class="CurrencyGroup">
               <img
                 id="AugOrb"
                 class="Image Currency Manual"
@@ -86,7 +86,16 @@
             </div>
           </div>
           <div id="AutoContainer" class="Auto">
-            <div class="CurrencyGroup">
+            <div id="HarvestGroup" class="CurrencyGroup">
+              <img
+                id="Harvest"
+                class="Image Currency"
+                src="CurrencyPics/Harvest.webp"
+                alt=""
+              />
+              <label id="HarvestLabel" class="XYLabel AddBorder">X:, Y:</label>
+            </div>
+            <div id="ChaosOrbGroup" class="CurrencyGroup">
               <img
                 id="ChaosOrb"
                 class="Image Currency"
@@ -95,31 +104,38 @@
               />
               <label id="ChaosOrbLabel" class="XYLabel AddBorder">X:, Y:</label>
             </div>
-            <div class="CurrencyGroup">
+
+            <div id="OrbOfAlterationGroup" class="CurrencyGroup">
               <img
-                id="OrbofAlteration"
+                id="OrbOfAlteration"
                 class="Image Currency"
                 src="CurrencyPics/AltOrb.png"
                 alt=""
               />
-              <label id="OrbofAlterationLabel" class="XYLabel AddBorder"
+              <label id="OrbOfAlterationLabel" class="XYLabel AddBorder"
                 >X:, Y:</label
               >
             </div>
-
-            <div class="CurrencyGroup" id="CurrencyTabDiv">
-              <div id="CurrencyTabItemSpot" class="AddBorder Tutorial Currency">
+            <div id="CurrencyTabGroup" class="CurrencyGroup">
+              <div id="CurrencyTab" class="AddBorder Currency">
                 Currency tab <br />
                 Item spot
               </div>
-              <label class="XYLabel" id="CurrencyTabItemSpotLabel">X:,Y:</label>
+              <label class="XYLabel" id="CurrencyTabLabel">X:, Y:</label>
             </div>
-            <div class="CurrencyGroup" id="EssenceTabDiv">
-              <div id="EssenceTabItemSpot" class="AddBorder Tutorial Currency">
+            <div id="HarvestTabGroup" class="CurrencyGroup">
+              <div id="HarvestTab" class="AddBorder Currency">
+                Harvest tab <br />
+                Item spot
+              </div>
+              <label class="XYLabel" id="HarvestTabLabel">X:, Y:</label>
+            </div>
+            <div id="EssenceTabGroup" class="CurrencyGroup">
+              <div id="EssenceTab" class="AddBorder Currency">
                 Essence tab <br />
                 Item spot
               </div>
-              <label class="XYLabel" id="EssenceTabItemSpotLabel">X:, Y:</label>
+              <label class="XYLabel" id="EssenceTabLabel">X:, Y:</label>
             </div>
           </div>
         </div>
@@ -133,246 +149,318 @@
       />
       <div id="EssenceContainer" style="display: none">
         <div id="EssenceLeftSide">
-          <div id="Greed" class="EssenceDiv">
+          <div id="Greed" class="EssenceGroup">
             <div class="CoordsLabel">
               <img
                 src="EssencePics\Deafening_Essence_of_Greed_inventory_icon.png"
                 alt=""
-                class="Image Left Tutorial Essence Deafening"
+                class="Image Left Essence Deafening"
                 id="DeafeningEssenceOfGreed"
               />
+              <label id="DeafeningEssenceOfGreedLabel" class="XYLabel"
+                >X: ,Y:
+              </label>
             </div>
           </div>
-          <div id="Contempt" class="EssenceDiv">
+          <div id="Contempt" class="EssenceGroup">
             <div class="CoordsLabel">
               <img
                 src="EssencePics\Deafening_Essence_of_Contempt_inventory_icon.png"
                 alt=""
-                class="Image Essence Left Tutorial Deafening"
+                class="Image Essence Left Deafening"
                 id="DeafeningEssenceOfContempt"
               />
+              <label id="DeafeningEssenceOfContemptLabel" class="XYLabel"
+                >X: ,Y:
+              </label>
             </div>
           </div>
-          <div id="Hatred" class="EssenceDiv">
+          <div id="Hatred" class="EssenceGroup">
             <div class="CoordsLabel">
               <img
                 src="EssencePics\Deafening_Essence_of_Hatred_inventory_icon.png"
                 alt=""
-                class="Image Essence Left Tutorial Deafening"
+                class="Image Essence Left Deafening"
                 id="DeafeningEssenceOfHatred"
               />
+              <label id="DeafeningEssenceOfHatredLabel" class="XYLabel"
+                >X: ,Y:
+              </label>
             </div>
           </div>
-          <div id="Woe" class="EssenceDiv">
+          <div id="Woe" class="EssenceGroup">
             <div class="CoordsLabel">
               <img
                 src="EssencePics\Deafening_Essence_of_Woe_inventory_icon.png"
                 alt=""
-                class="Image Essence Left Tutorial Deafening"
+                class="Image Essence Left Deafening"
                 id="DeafeningEssenceOfWoe"
               />
+              <label id="DeafeningEssenceOfWoeLabel" class="XYLabel"
+                >X: ,Y:
+              </label>
             </div>
           </div>
-          <div id="Fear" class="EssenceDiv">
+          <div id="Fear" class="EssenceGroup">
             <div class="CoordsLabel">
               <img
                 src="EssencePics\Deafening_Essence_of_Fear_inventory_icon.png"
                 alt=""
-                class="Image Essence Left Tutorial Deafening"
+                class="Image Essence Left Deafening"
                 id="DeafeningEssenceOfFear"
               />
+              <label id="DeafeningEssenceOfFearLabel" class="XYLabel"
+                >X: ,Y:
+              </label>
             </div>
           </div>
-          <div id="Anger" class="EssenceDiv">
+          <div id="Anger" class="EssenceGroup">
             <div class="CoordsLabel">
               <img
                 src="EssencePics\Deafening_Essence_of_Anger_inventory_icon.png"
                 alt=""
-                class="Image Essence Left Tutorial Deafening"
+                class="Image Essence Left Deafening"
                 id="DeafeningEssenceOfAnger"
               />
+              <label id="DeafeningEssenceOfAngerLabel" class="XYLabel"
+                >X: ,Y:
+              </label>
             </div>
           </div>
-          <div id="Torment" class="EssenceDiv">
+          <div id="Torment" class="EssenceGroup">
             <div class="CoordsLabel">
               <img
                 src="EssencePics\Deafening_Essence_of_Torment_inventory_icon.png"
                 alt=""
-                class="Image Essence Left Tutorial Deafening"
+                class="Image Essence Left Deafening"
                 id="DeafeningEssenceOfTorment"
               />
+              <label id="DeafeningEssenceOfTormentLabel" class="XYLabel"
+                >X: ,Y:
+              </label>
             </div>
           </div>
-          <div id="Sorrow" class="EssenceDiv">
+          <div id="Sorrow" class="EssenceGroup">
             <div class="CoordsLabel">
               <img
                 src="EssencePics\Deafening_Essence_of_Sorrow_inventory_icon.png"
                 alt=""
-                class="Image Essence Left Tutorial Deafening"
+                class="Image Essence Left Deafening"
                 id="DeafeningEssenceOfSorrow"
               />
+              <label id="DeafeningEssenceOfSorrowLabel" class="XYLabel"
+                >X: ,Y:
+              </label>
             </div>
           </div>
-          <div id="Rage" class="EssenceDiv">
+          <div id="Rage" class="EssenceGroup">
             <div class="CoordsLabel">
               <img
                 src="EssencePics\Deafening_Essence_of_Rage_inventory_icon.png"
                 alt=""
-                class="Image Essence Left Tutorial Deafening"
+                class="Image Essence Left Deafening"
                 id="DeafeningEssenceOfRage"
               />
+              <label id="DeafeningEssenceOfRageLabel" class="XYLabel"
+                >X: ,Y:
+              </label>
             </div>
           </div>
-          <div id="Suffering" class="EssenceDiv">
+          <div id="Suffering" class="EssenceGroup">
             <div class="CoordsLabel">
               <img
                 src="EssencePics\Deafening_Essence_of_Suffering_inventory_icon.png"
                 alt=""
-                class="Image Essence Left Tutorial Deafening"
+                class="Image Essence Left Deafening"
                 id="DeafeningEssenceOfSuffering"
               />
+              <label id="DeafeningEssenceOfSufferingLabel" class="XYLabel"
+                >X: ,Y:
+              </label>
             </div>
           </div>
-          <div id="Wrath" class="EssenceDiv">
+          <div id="Wrath" class="EssenceGroup">
             <div class="CoordsLabel">
               <img
                 src="EssencePics\Deafening_Essence_of_Wrath_inventory_icon.png"
                 alt=""
-                class="Image Essence Left Tutorial Deafening"
+                class="Image Essence Left Deafening"
                 id="DeafeningEssenceOfWrath"
               />
+              <label id="DeafeningEssenceOfWrathLabel" class="XYLabel"
+                >X: ,Y:
+              </label>
             </div>
           </div>
-          <div id="Doubt" class="EssenceDiv">
+          <div id="Doubt" class="EssenceGroup">
             <div class="CoordsLabel">
               <img
                 src="EssencePics\Deafening_Essence_of_Doubt_inventory_icon.png"
                 alt=""
-                class="Image Essence Left Tutorial Deafening"
+                class="Image Essence Left Deafening"
                 id="DeafeningEssenceOfDoubt"
               />
+              <label id="DeafeningEssenceOfDoubtLabel" class="XYLabel"
+                >X: ,Y:
+              </label>
             </div>
           </div>
         </div>
         <br />
         <div id="EssenceRightSide">
-          <div id="Loathing" class="EssenceDiv">
+          <div id="Loathing" class="EssenceGroup">
             <div class="CoordsLabel">
               <img
                 src="EssencePics\Deafening_Essence_of_Loathing_inventory_icon.png"
                 alt=""
-                class="Image Essence Right Tutorial Deafening"
+                class="Image Essence Right Deafening"
                 id="DeafeningEssenceOfLoathing"
               />
+              <label id="DeafeningEssenceOfLoathingLabel" class="XYLabel"
+                >X: ,Y:
+              </label>
             </div>
           </div>
-          <div id="Zeal" class="EssenceDiv">
+          <div id="Zeal" class="EssenceGroup">
             <div class="CoordsLabel">
               <img
                 src="EssencePics\Deafening_Essence_of_Zeal_inventory_icon.png"
                 alt=""
-                class="Image Essence Right Tutorial Deafening"
+                class="Image Essence Right Deafening"
                 id="DeafeningEssenceOfZeal"
               />
+              <label id="DeafeningEssenceOfZealLabel" class="XYLabel"
+                >X: ,Y:
+              </label>
             </div>
           </div>
 
-          <div id="Anguish" class="EssenceDiv">
+          <div id="Anguish" class="EssenceGroup">
             <div class="CoordsLabel">
               <img
                 src="EssencePics\Deafening_Essence_of_Anguish_inventory_icon.png"
                 alt=""
-                class="Image Essence Right Tutorial Deafening"
+                class="Image Essence Right Deafening"
                 id="DeafeningEssenceOfAnguish"
               />
+              <label id="DeafeningEssenceOfAnguishLabel" class="XYLabel"
+                >X: ,Y:
+              </label>
             </div>
           </div>
-          <div id="Spite" class="EssenceDiv">
+          <div id="Spite" class="EssenceGroup">
             <div class="CoordsLabel">
               <img
                 src="EssencePics\Deafening_Essence_of_Spite_inventory_icon.png"
                 alt=""
-                class="Image Essence Right Tutorial Deafening"
+                class="Image Essence Right Deafening"
                 id="DeafeningEssenceOfSpite"
               />
+              <label id="DeafeningEssenceOfSpiteLabel" class="XYLabel"
+                >X: ,Y:
+              </label>
             </div>
           </div>
-          <div id="Scorn" class="EssenceDiv">
+          <div id="Scorn" class="EssenceGroup">
             <div class="CoordsLabel">
               <img
                 src="EssencePics\Deafening_Essence_of_Scorn_inventory_icon.png"
                 alt=""
-                class="Image Essence Right Tutorial Deafening"
+                class="Image Essence Right Deafening"
                 id="DeafeningEssenceOfScorn"
               />
+              <label id="DeafeningEssenceOfScornLabel" class="XYLabel"
+                >X: ,Y:
+              </label>
             </div>
           </div>
-          <div id="Envy" class="EssenceDiv">
+          <div id="Envy" class="EssenceGroup">
             <div class="CoordsLabel">
               <img
                 src="EssencePics\Deafening_Essence_of_Envy_inventory_icon.png"
                 alt=""
-                class="Image Essence Right Tutorial Deafening"
+                class="Image Essence Right Deafening"
                 id="DeafeningEssenceOfEnvy"
               />
+              <label id="DeafeningEssenceOfEnvyLabel" class="XYLabel"
+                >X: ,Y:
+              </label>
             </div>
           </div>
-          <div id="Misery" class="EssenceDiv">
+          <div id="Misery" class="EssenceGroup">
             <div class="CoordsLabel">
               <img
                 src="EssencePics\Deafening_Essence_of_Misery_inventory_icon.png"
                 alt=""
-                class="Image Essence Right Tutorial Deafening"
+                class="Image Essence Right Deafening"
                 id="DeafeningEssenceOfMisery"
               />
+              <label id="DeafeningEssenceOfMiseryLabel" class="XYLabel"
+                >X: ,Y:
+              </label>
             </div>
           </div>
-          <div id="Dread" class="EssenceDiv">
+          <div id="Dread" class="EssenceGroup">
             <div class="CoordsLabel">
               <img
                 src="EssencePics\Deafening_Essence_of_Dread_inventory_icon.png"
                 alt=""
-                class="Image Essence Right Tutorial Deafening"
+                class="Image Essence Right Deafening"
                 id="DeafeningEssenceOfDread"
               />
+              <label id="DeafeningEssenceOfDreadLabel" class="XYLabel"
+                >X: ,Y:
+              </label>
             </div>
           </div>
-          <div id="SpecialEssenceDiv">
-            <div id="Insanity" class="EssenceDiv CoordsLabel">
+          <!-- <div id="SpecialEssenceGroup">
+            <div id="Insanity" class="EssenceGroup CoordsLabel">
               <img
                 src="EssencePics\Essence_of_Insanity_inventory_icon.png"
                 alt=""
-                class="Image Essence Right Tutorial Special"
+                class="Image Essence Right Special"
                 id="EssenceOfInsanity"
               />
+              <label id="DeafeningEssenceOfInsanityLabel" class="XYLabel"
+                >X: ,Y:
+              </label>
             </div>
-            <div id="Horror" class="EssenceDiv CoordsLabel">
+            <div id="Horror" class="EssenceGroup CoordsLabel">
               <img
                 src="EssencePics\Essence_of_Horror_inventory_icon.png"
                 alt=""
-                class="Image Essence Right Tutorial Special"
+                class="Image Essence Right Special"
                 id="EssenceOfHorror"
               />
+              <label id="DeafeningEssenceOfHorrorLabel" class="XYLabel"
+                >X: ,Y:
+              </label>
             </div>
-            <div id="Delirium" class="EssenceDiv CoordsLabel">
+            <div id="Delirium" class="EssenceGroup CoordsLabel">
               <img
                 src="EssencePics\Essence_of_Delirium_inventory_icon.png"
                 alt=""
-                class="Image Essence Right Tutorial Special"
+                class="Image Essence Right Special"
                 id="EssenceOfDelirium"
               />
+              <label id="DeafeningEssenceOfDeliriumLabel" class="XYLabel"
+                >X: ,Y:
+              </label>
             </div>
-            <div id="Hysteria" class="EssenceDiv CoordsLabel">
+            <div id="Hysteria" class="EssenceGroup CoordsLabel">
               <img
                 src="EssencePics\Essence_of_Hysteria_inventory_icon.png"
                 alt=""
-                class="Image Essence Right Tutorial Special"
+                class="Image Essence Right Special"
                 id="EssenceOfHysteria"
               />
+              <label id="DeafeningEssenceOfHysteriaLabel" class="XYLabel"
+                >X: ,Y:
+              </label>
             </div>
-          </div>
+          </div> -->
         </div>
-        <div id="EssenceSpecial"></div>
+        <!-- <div id="EssenceSpecial"></div> -->
       </div>
       <button id="StoreCoordsButton" class="button">Store coordinates</button>
       <div id="Insertion"></div>

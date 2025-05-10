@@ -18,8 +18,6 @@ import "../HelperFunctionsFrontend/ExportItem.js";
 import "../HelperFunctionsFrontend/SaveCraft.js";
 //#region Declarations
 const Main = document.getElementById("Main");
-// let Coords;
-
 const ModNameInput = document.getElementById("ModInput");
 const ExcludeModInput = document.getElementById("ExcludeModInput");
 const Container = document.getElementById("Container");
@@ -27,76 +25,31 @@ const ExclusionContainer = document.getElementById("ExclusionContainer");
 const CurrencyDiv = document.getElementById("CurrencyDiv");
 const StartButton = document.getElementById("StartButton");
 const SavedCrafts = document.getElementById("SavedCrafts");
-// let DeleteSaveButton;
 let Counter;
-// const ExportFileOKButton = document.getElementById("ExportFileOKButton");
-// const SaveCraftButton = document.getElementById("SaveCraftButton");
 const ImageContainer = document.getElementById("ImageContainer");
-// const SaveGallery = document.getElementById("Gallery");
-// const Chaos = document.getElementById("ChaosOrb");
-// const ChaosOrbLabel = document.getElementById("ChaosOrbLabel");
-// const Alt = document.getElementById("OrbofAlteration");
-// const AltLabel = document.getElementById("OrbofAlterationLabel");
 const ManualContainer = document.getElementById("ManualContainer");
 const EssenceContainer = document.getElementById("EssenceContainer");
 const EssenceImage = document.getElementById("EssenceImage");
 const EssenceClassList = document.getElementsByClassName("Essence");
-// const DeafeningEssencesLeft = document.querySelectorAll(".Deafening.Left");
-// const ScreamingEssencesLeft = document.querySelectorAll(".Screaming.Left");
-// const ShriekingEssenceLeft = document.querySelectorAll(".Shrieking.Left");
-const EssenceTabLocationLabel = document.getElementById(
-  "EssenceTabItemSpotLabel"
-);
-// const EssenceTabEssenceCoords = document.getElementById("EssenceTabItemSpot");
-// const CurrencyTabEssenceCoords = document.getElementById("CurrencyTabItemSpot");
-const CurrencyTabLocationLabel = document.getElementById(
-  "CurrencyTabItemSpotLabel"
-);
-const CurrencyTabDiv = document.getElementById("CurrencyTabDiv");
-const EssenceTabDiv = document.getElementById("EssenceTabDiv");
 const EssenceNameArray = [];
 const Insertion = document.getElementById("Insertion"); // Used for saving crafts
 const MaxRerolls = document.getElementById("MaxRerolls");
 const LagInput = document.getElementById("LagInput");
 let ModNumber = document.getElementById("ModNumber");
-// const MinRoll = document.getElementById("MinRoll");
-// const InputDiv = document.getElementById("InputDiv");
-// const Instructions = document.getElementsByClassName("Instructions");
-// const InstructionsDiv1 = document.getElementById("Instructions");
-// const InstructionsDiv2 = document.getElementById("Instructions2");
-// const InstructionsCheckBox = document.getElementById("InstructionsCheckBox");
 const LagCheckBox = document.getElementById("LagCheckBox");
-// const CheckBoxClass = document.getElementsByClassName("CheckBox");
-// const Fractures = document.getElementById("Fractures");
-// const FractureCheckBox = document.getElementById("FractureCheckBox");
 const AllowLabelModification = document.getElementsByClassName("Modify");
-// const Greed1 = document.getElementById("DeafeningEssenceOfGreed");
-// const Greed2 = document.getElementById("ShriekingEssenceOfGreed");
-// const Contempt = document.getElementById("DeafeningEssenceOfContempt");
-// const Loathing = document.getElementById("DeafeningEssenceOfLoathing");
 const StoreCoordsButton = document.getElementById("StoreCoordsButton");
-// const TutorialEssence = document.getElementsByClassName("Tutorial");
-const ElementsToRemove = [];
-const EssenceCoords = {};
-// const CurrencyCoords = {};
+// const ElementsToRemove = [];
+// const EssenceCoords = {};
 const XYLabelList = document.getElementsByClassName("XYLabel");
 let Currencies = document.getElementsByClassName("Currency");
 let CoordsLabelDivList = document.getElementsByClassName("CoordsLabel");
 let ManualCurrency = document.getElementsByClassName("Manual");
-let AnnulOrbCoords;
-let ScourOrbCoords;
-let TransmuteOrbCoords;
-let AugOrbCoords;
-let RegalOrbCoords;
-let ChaosOrbCoords;
-let OrbofAlterationCoords;
-let EssenceTabCoords;
-let CurrencyTabCoords;
 let CraftMaterial;
-// let Timer;
 let MouseCoordsX;
 let MouseCoordsY;
-let ChangingLabel; // The X / Y label for each essence.
+let XYLabel; // The X / Y label for each essence/currency.
+let CoordsArray = [];
 let ScreenRatio;
 //#endregion
 let LagInputLS = localStorage.getItem("LagInput");
@@ -124,9 +77,9 @@ for (const Essence of EssenceClassList) {
   EssenceNameArray.push(Essence.id);
   Essence.style.opacity = 0.2;
 }
-if (localStorage.length < 2) {
-  LoadInitialState();
+if (localStorage.length < 1) {
 } else {
+  LoadInitialState();
   (async function () {
     let SavedItems = GetLSSaves("Save");
     if (Object.keys(SavedItems).length > 0) {
@@ -194,32 +147,9 @@ if (localStorage.length < 2) {
   }
 
   RemoveElementByClass("XYLabel");
-  EssenceTabDiv.remove();
-  CurrencyTabDiv.remove();
 
   for (let i = 0; i < CoordsLabelDivList.length; i++) {
     CoordsLabelDivList[i].id = `${EssenceClassList[i].id}Div`;
-  }
-  StoreCoordsButton.remove();
-  let RenderEssences = JSON.parse(localStorage.getItem("EssenceCoords"));
-  let RemoveEssenceFromRender = [];
-
-  ShowHiddenContent();
-  for (const Item of CoordsLabelDivList) {
-    let Re = Item.id.toString();
-    Re = Re.replace("Div", "");
-    for (const Essence in RenderEssences) {
-      if (Essence.includes(Re)) {
-        Item.classList.add("Chosen");
-      } else if (!Item.classList.contains("Chosen")) {
-        RemoveEssenceFromRender.push(Item);
-      }
-    }
-  }
-  for (const Item of RemoveEssenceFromRender) {
-    if (!Item.classList.contains("Chosen")) {
-      Item.remove();
-    }
   }
 }
 //#region Placeholder Eventlisteners
@@ -280,6 +210,7 @@ ExcludeModInput.addEventListener("keydown", (e) => {
 //#region Start Button Eventlistener
 StartButton.addEventListener("click", function () {
   DisplayInsertionMsg("Crafting started!", "green");
+  console.log("Craftmaterial: ", CraftMaterial);
   StartCrafting(CraftMaterial);
 });
 //#endregion
@@ -327,13 +258,13 @@ EssenceContainer.addEventListener("click", function (e) {
   if (e.target.classList.contains("Essence")) {
     Main.style.position = "";
     let SelectedEssence = document.getElementById(`${e.target.id}`);
-    ChangingLabel = document.getElementById(`${SelectedEssence.id}` + "Label");
+    XYLabel = document.getElementById(`${SelectedEssence.id}` + "Label");
     let HoverHighlight = e.target.classList.contains("Hover", "Highlight");
     SelectedEssence.classList.add("Hover", "Highlight");
     for (const Item of EssenceClassList) {
       Item.style.opacity = 0.2;
-      if (ChangingLabel) {
-        ChangingLabel.classList.remove("Modify");
+      if (XYLabel) {
+        XYLabel.classList.remove("Modify");
       }
       Item.classList.remove("Hover", "Highlight");
     }
@@ -341,9 +272,9 @@ EssenceContainer.addEventListener("click", function (e) {
       Item.style.opacity = 0.1;
     }
     if (!HoverHighlight) {
-      if (ChangingLabel) {
-        ChangingLabel.classList.add("Modify");
-        ChangingLabel.style.opacity = 1;
+      if (XYLabel) {
+        XYLabel.classList.add("Modify");
+        XYLabel.style.opacity = 1;
       }
 
       e.target.style.opacity = 1;
@@ -359,7 +290,7 @@ EssenceImage.addEventListener("click", function (e) {
   for (const Item of AllowLabelModification) {
     Item.classList.remove("Modify");
   }
-  if (localStorage.length < 2) {
+  if (localStorage.length < 1) {
     StoreCoordsButton.style.display = "flex";
   }
 
@@ -374,7 +305,7 @@ EssenceImage.addEventListener("click", function (e) {
     CurrencyDiv.style.display = "none";
     EssenceContainer.style.display = "flex";
     ImageContainer.style.flexDirection = "column";
-    EssenceImage.src = "../Pictures/CurrencyPics/Arrow.png";
+    EssenceImage.src = "CurrencyPics/Arrow.png";
   } else {
     for (const Item of EssenceClassList) {
       Item.style.opacity = 0.3;
@@ -387,7 +318,7 @@ EssenceImage.addEventListener("click", function (e) {
     EssenceContainer.style.display = "none";
     ImageContainer.style.flexDirection = "column";
     EssenceImage.src =
-      "EssencePics/Torment/Deafening_Essence_of_Torment_inventory_icon.png";
+      "EssencePics/Deafening_Essence_of_Torment_inventory_icon.png";
   }
 });
 //#endregion
@@ -396,7 +327,7 @@ EssenceImage.addEventListener("click", function (e) {
 CurrencyDiv.addEventListener("click", (e) => {
   if (e.target.classList.contains("Currency")) {
     let wasHovered = e.target.classList.contains("Hover");
-    ChangingLabel = document.getElementById(`${e.target.id}` + "Label");
+    XYLabel = document.getElementById(`${e.target.id}` + "Label");
 
     // Remove the "Hover" class from all elements
     for (const Item of AllowLabelModification) {
@@ -410,8 +341,8 @@ CurrencyDiv.addEventListener("click", (e) => {
     if (!wasHovered) {
       e.target.classList.add("Hover");
       CraftMaterial = e.target.id;
-      if (ChangingLabel !== null) {
-        ChangingLabel.classList.add("Modify");
+      if (XYLabel !== null) {
+        XYLabel.classList.add("Modify");
       }
     }
   }
@@ -421,58 +352,25 @@ CurrencyDiv.addEventListener("click", (e) => {
 //#region Store Coords button
 
 StoreCoordsButton.addEventListener("click", function () {
-  if (
-    typeof EssenceTabCoords === "undefined" ||
-    typeof CurrencyTabCoords === "undefined"
-  ) {
-    DisplayInsertionMsg("Please select at least one item's coords", "red");
-  } else {
-    localStorage.setItem("CurrencyTabCoords", `${CurrencyTabCoords}`);
-    localStorage.setItem("ChaosOrbCoords", `${ChaosOrbCoords}`);
-    localStorage.setItem("AnnulOrbCoords", `${AnnulOrbCoords}`);
-    localStorage.setItem("RegalOrbCoords", `${RegalOrbCoords}`);
-    localStorage.setItem("ScourOrbCoords", `${ScourOrbCoords}`);
-    localStorage.setItem("TransmuteOrbCoords", `${TransmuteOrbCoords}`);
-    localStorage.setItem("AugOrbCoords", `${AugOrbCoords}`);
-    localStorage.setItem("OrbofAlterationCoords", `${OrbofAlterationCoords}`);
-    localStorage.setItem("EssenceTabCoords", `${EssenceTabCoords}`);
-
-    if (CurrencyTabLocationLabel.textContent === "X:, Y:") {
-      DisplayInsertionMsg(
-        "Please select the location of the item that will be rolled with alts and chaos",
-        "red"
-      );
-    } else {
-      EssenceTabLocationLabel.remove();
-      if (EssenceTabLocationLabel.textContent === "X:, Y:") {
-        DisplayInsertionMsg(
-          "Please select the location of the item that will be rolled with essences",
-          "red"
-        );
-      } else {
-        Currencies = document.getElementsByClassName("Currency");
-        ShowHiddenContent();
-        localStorage.setItem("EssenceCoords", JSON.stringify(EssenceCoords));
-        for (const Essence of CoordsLabelDivList) {
-          let Replace = Essence.id.replace("Div", "");
-          for (const Item in EssenceCoords) {
-            if (EssenceCoords[Item].Name.includes(Replace)) {
-              document.getElementById(`${Replace}Label`).style.display = "none";
-            } else {
-              if (!Essence.classList.contains("Selected")) {
-                ElementsToRemove.push(Essence);
-              }
-            }
-          }
-        }
-        for (const Item of ElementsToRemove) {
-          Item.remove();
-        }
-        window.location.reload();
-        DisplayInsertionMsg("Items have been stored!", "green");
-      }
-    }
+  //Sets local storage coords for an item
+  for (let i = 0; i < CoordsArray.length; i++) {
+    let ItemID = CoordsArray[i].id.replace("Label", "");
+    let ItemCoords = CoordsArray[i].textContent;
+    ItemCoords = ItemCoords.split(",");
+    let ItemXCoords = Math.floor(
+      parseInt(ItemCoords[0].replace("X:", "").trim()) * ScreenRatio
+    );
+    let ItemYCoords = Math.floor(
+      parseInt(ItemCoords[1].replace("Y:", "").trim()) * ScreenRatio
+    );
+    ItemCoords = [ItemXCoords, ItemYCoords];
+    localStorage.setItem(`${ItemID}Coords`, `${ItemCoords}`);
   }
+  StoreCoordsButton.style.display = "none";
+  window.location.reload();
+  ShowHiddenContent();
+  LoadInitialState();
+  DisplayInsertionMsg("Items coords have been stored!", "green");
 });
 //#endregion
 
@@ -545,107 +443,17 @@ window.api.MousePos((event, data) => {
   let CoordsSplit = data.split(",");
   MouseCoordsX = parseInt(CoordsSplit[0]);
   MouseCoordsY = parseInt(CoordsSplit[1]);
-  // X/Y label for each essence
-  if (ChangingLabel == undefined) {
+  // X/Y label for each currencyItem / essence
+  if (XYLabel == undefined) {
     RemoveElementByClass("HoverTooltip");
 
     DisplayInsertionMsg("No currency selected.", "red");
   }
-  if (
-    ChangingLabel !== undefined &&
-    ChangingLabel.classList.contains("Modify")
-  ) {
-    ChangingLabel.innerText = `X: ${MouseCoordsX}, Y: ${MouseCoordsY}`;
-    ChangingLabel.style.opacity = 1;
-    let RemoveTutorialString = ChangingLabel.id.replace("Label", "");
-    let EssenceTier;
-    if (
-      RemoveTutorialString.includes("Deaf") ||
-      RemoveTutorialString.includes("Scream") ||
-      RemoveTutorialString.includes("Shriek")
-    ) {
-      if (RemoveTutorialString.includes("Deaf")) {
-        EssenceTier = "Deafening";
-      } else if (RemoveTutorialString.includes("Shrieking")) {
-        EssenceTier = "Shrieking";
-      } else if (RemoveTutorialString.includes("Screaming")) {
-        EssenceTier = "Screaming";
-      }
-
-      EssenceCoords[`${RemoveTutorialString}`] = {
-        //////////////////////////////////////////////////
-        Name: `${RemoveTutorialString}`,
-        Coords: [
-          parseInt(MouseCoordsX * ScreenRatio),
-          parseInt(MouseCoordsY * ScreenRatio),
-        ],
-        Tier: EssenceTier,
-      };
-    } else if (
-      !RemoveTutorialString.includes("Spot") &&
-      !RemoveTutorialString.includes("Essence")
-    ) {
-      if (RemoveTutorialString.includes("Chaos")) {
-        ChaosOrbCoords = [
-          parseInt(MouseCoordsX * ScreenRatio),
-          parseInt(MouseCoordsY * ScreenRatio),
-        ];
-      } else if (RemoveTutorialString.includes("Alteration")) {
-        OrbofAlterationCoords = [
-          parseInt(MouseCoordsX * ScreenRatio),
-          parseInt(MouseCoordsY * ScreenRatio),
-        ];
-      } else if (RemoveTutorialString.includes("Annul")) {
-        AnnulOrbCoords = [
-          parseInt(MouseCoordsX * ScreenRatio),
-          parseInt(MouseCoordsY * ScreenRatio),
-        ];
-      } else if (RemoveTutorialString.includes("Regal")) {
-        RegalOrbCoords = [
-          parseInt(MouseCoordsX * ScreenRatio),
-          parseInt(MouseCoordsY * ScreenRatio),
-        ];
-      } else if (RemoveTutorialString.includes("Transmute")) {
-        TransmuteOrbCoords = [
-          parseInt(MouseCoordsX * ScreenRatio),
-          parseInt(MouseCoordsY * ScreenRatio),
-        ];
-      } else if (RemoveTutorialString.includes("Scour")) {
-        ScourOrbCoords = [
-          parseInt(MouseCoordsX * ScreenRatio),
-          parseInt(MouseCoordsY * ScreenRatio),
-        ];
-      } else if (RemoveTutorialString.includes("Aug")) {
-        AugOrbCoords = [
-          parseInt(MouseCoordsX * ScreenRatio),
-          parseInt(MouseCoordsY * ScreenRatio),
-        ];
-      }
-    } else if (
-      !RemoveTutorialString.includes("Deafen") &&
-      !RemoveTutorialString.includes("Shriek") &&
-      !RemoveTutorialString.includes("Scream") &&
-      !RemoveTutorialString.includes("Orb") &&
-      !RemoveTutorialString.includes("Currency")
-    ) {
-      EssenceTabCoords = [
-        parseInt(MouseCoordsX * ScreenRatio),
-        parseInt(MouseCoordsY * ScreenRatio),
-      ];
-    } else if (
-      RemoveTutorialString.includes("Spot") &&
-      RemoveTutorialString.includes("Currency")
-    ) {
-      CurrencyTabCoords = [
-        parseInt(MouseCoordsX * ScreenRatio),
-        parseInt(MouseCoordsY * ScreenRatio),
-      ];
-    }
-
-    let RemoveTutorial = document.getElementById(`${RemoveTutorialString}`);
-    RemoveTutorial.classList.remove("Tutorial");
+  if (XYLabel !== undefined && XYLabel.classList.contains("Modify")) {
+    XYLabel.textContent = `X: ${MouseCoordsX}, Y: ${MouseCoordsY}`;
+    XYLabel.style.opacity = 1;
+    CoordsArray.push(XYLabel);
   }
 });
 
-//rework
 //#endregion

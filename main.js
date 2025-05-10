@@ -35,14 +35,14 @@ nativeTheme.themeSource = "dark";
 //
 //
 let LocalDev = process.env.NODE_ENV;
-//
-//
-//
-//
-//
 //#region AutoUpdater
 autoUpdater.checkForUpdatesAndNotify();
 //#endregion
+//
+//
+//
+//
+//
 let win;
 let LogFilePath;
 let ScreenRatio;
