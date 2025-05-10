@@ -1,6 +1,6 @@
 {
   "name": "AutoReroll",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Automatically rerolls items",
   "main": "main.js",
   "type": "module",
@@ -17,6 +17,10 @@
       {
         "from": "python/Reroll.py",
         "to": "python/Reroll.py"
+      },
+      {
+        "from": "python/HarvestReroll.py",
+        "to": "python/HarvestReroll.py"
       },
       {
         "from": "python/UseCurrency.py",
