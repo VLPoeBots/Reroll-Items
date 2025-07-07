@@ -160,6 +160,9 @@ app.whenReady().then(() => {
   const Transmute = globalShortcut.register("Control+Alt+Enter", () => {
     win.webContents.send("GlobalKey", "TransmuteOrb");
   });
+  const Alch = globalShortcut.register("Alt+Enter", () => {
+    win.webContents.send("GlobalKey", "AlchOrb");
+  });
   ipcMain.on("LoadSaveIconPics", async (event, data) => {
     if (data === "InitialRequest") {
       let IconPics = await ReadFolder(LogFilePath, SaveIconsFolder);

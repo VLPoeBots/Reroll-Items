@@ -64,6 +64,7 @@ let Hotkeys = {
   ScourOrb: "Ctrl+Backspace",
   TransmuteOrb: "Ctrl+Alt+Enter",
   AugOrb: "Shift+Enter",
+  AlchOrb: "Alt+Enter",
 };
 //#endregion
 //#region Resize Window
