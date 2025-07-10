@@ -88,6 +88,13 @@ if (localStorage.length < 1) {
         let IconName = localStorage.getItem(key);
         IconName = IconName.replace("SaveIconName", "");
         IconName = IconName.split("PositiveMods").shift();
+        console.log("IconName: ", IconName);
+        let IconFolderPath = new Promise((resolve) => {
+          window.api.GetIconPath((event, data) => {
+            resolve(data);
+          });
+        });
+        let IconPath = await IconFolderPath;
         let NewEl = CreateElementFn(
           "img",
           `${key}`,
