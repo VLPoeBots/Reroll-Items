@@ -4,10 +4,7 @@ export function CheckPyPackage(PackageName, LogFilePath) {
   exec(`pip show ${PackageName}`, (error, stdout, stderr) => {
     if (error || stderr) {
       WriteToFile(LogFilePath, `${PackageName} not found`);
-      if (
-        error.includes("WARNING: Package(s) not found:") ||
-        stderr.includes("WARNING: Package(s) not found:")
-      ) {
+      if (error || stderr) {
         WriteToFile(LogFilePath, `attempting to install ${PackageName}... `);
         InstallPyPackage(PackageName, LogFilePath);
       }

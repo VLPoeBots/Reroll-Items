@@ -1,6 +1,6 @@
 {
   "name": "AutoReroll",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "description": "Automatically rerolls items",
   "main": "main.js",
   "type": "module",
@@ -33,6 +33,9 @@
     ],
     "win": {
       "target": "nsis",
+      "electronLanguages": [
+        "en-US"
+      ],
       "icon": "frosttide23.ico",
       "requestedExecutionLevel": "requireAdministrator"
     },
