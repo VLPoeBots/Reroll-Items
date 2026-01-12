@@ -51,6 +51,7 @@ let MouseCoordsY;
 let XYLabel; // The X / Y label for each essence/currency.
 let CoordsArray = [];
 let ScreenRatio;
+let IconFolderPath;
 //#endregion
 let LagInputLS = localStorage.getItem("LagInput");
 if (LagInputLS) {
@@ -78,31 +79,43 @@ for (const Essence of EssenceClassList) {
   EssenceNameArray.push(Essence.id);
   Essence.style.opacity = 0.2;
 }
-if (localStorage.length < 1) {
-} else {
+if (localStorage.length > 0) {
   LoadInitialState();
   (async function () {
     let SavedItems = GetLSSaves("Save");
+    console.log("SavedItems: ", SavedItems);
+    IconFolderPath = new Promise((resolve) => {
+      window.api.GetIconPath((event, data) => {
+        resolve(data);
+      });
+    });
     if (Object.keys(SavedItems).length > 0) {
-      for (const key of Object.keys(SavedItems)) {
-        let IconName = localStorage.getItem(key);
-        IconName = IconName.replace("SaveIconName", "");
-        IconName = IconName.split("PositiveMods").shift();
-        console.log("IconName: ", IconName);
-        let IconFolderPath = new Promise((resolve) => {
-          window.api.GetIconPath((event, data) => {
-            resolve(data);
-          });
-        });
-        let IconPath = await IconFolderPath;
-        let NewEl = CreateElementFn(
-          "img",
-          `${key}`,
-          ["Image", "Saved"],
-          "",
-          SavedCrafts
-        );
-        NewEl.src = `${IconPath}/${IconName}`;
+      try {
+        console.log("All Items: ", Object.keys(SavedItems));
+        for (const key of Object.keys(SavedItems)) {
+          console.log("Keys: ", key);
+          let IconName = localStorage.getItem(key);
+          IconName = IconName.replace("SaveIconName", "");
+          IconName = IconName.split("PositiveMods").shift();
+          console.log("IconName: ", IconName);
+
+          console.log("IconFolderPath: ", IconFolderPath);
+          let IconPath = await IconFolderPath;
+
+          console.log("IconPath: ", IconPath);
+          let NewEl = CreateElementFn(
+            "img",
+            `${key}`,
+            ["Image", "Saved"],
+            "",
+            SavedCrafts
+          );
+          NewEl.src = `${IconPath}/${IconName}`;
+          console.log("NewElSource: ", `${IconPath}/${IconName}`);
+          console.log("NewEl: ", NewEl);
+        }
+      } catch (error) {
+        console.error("Error loading saved items: ", error);
       }
     }
   })();

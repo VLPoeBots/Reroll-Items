@@ -217,16 +217,6 @@ SavedCrafts.addEventListener("click", (e) => {
 //#endregion
 //#region Delete Saved Items
 
-SavedCrafts.addEventListener("mouseover", (e) => {
-  if (e.target.classList.contains("Saved")) {
-    e.target.classList.add("Delete");
-  }
-});
-SavedCrafts.addEventListener("mouseout", (e) => {
-  if (e.target.classList.contains("Delete")) {
-    e.target.classList.remove("Delete");
-  }
-});
 document.addEventListener("keydown", (e) => {
   if (e.key === "Delete") {
     let SelectedItem = document.getElementsByClassName("Delete")[0];
@@ -238,14 +228,20 @@ document.addEventListener("keydown", (e) => {
 });
 
 //#endregion
-//#region Display labels
+//#region Display labels and Delete class functionality
 SavedCrafts.addEventListener("mouseover", (e) => {
+  if (e.target.classList.contains("Saved")) {
+    e.target.classList.add("Delete");
+  }
   if (e.target.classList.contains("Image")) {
     RemoveElementByClass("HoverTooltip");
     CreateElementFn("div", "", ["HoverTooltip"], `${e.target.id}`, Insertion);
   }
 });
 SavedCrafts.addEventListener("mouseout", (e) => {
+  if (e.target.classList.contains("Delete")) {
+    e.target.classList.remove("Delete");
+  }
   if (e.target.classList.contains("Image")) {
     e.target.style.width = "40px";
     e.target.style.height = "40px";
